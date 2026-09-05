@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-heading">
+    <div>
+        <h1>My sticky notes</h1>
+        <p>Active notes owned by {{ user.username }}.</p>
+    </div>
+    <a class="button" href="{% url 'notes:create' %}">Create note</a>
+</div>
+<form class="search" method="get" role="search">
+    <label for="search-notes">Search title or content</label>
+    <div>
+        <input id="search-notes" name="q" value="{{ query }}"
+               placeholder="Enter a keyword">
+        <button class="button" type="submit">Search</button>
+        {% if query %}<a href="{% url 'notes:list' %}">Clear</a>{% endif %}
+    </div>
+</form>
+<div class="notes-grid">
+    {% for note in notes %}
+        <article class="sticky-note">
+            <h2><a href="{{ note.get_absolute_url }}">{{ note.title }}</a></h2>
+            <p>{{ note.content|truncatewords:30 }}</p>
+            <small>Updated {{ note.updated_at|date:"j M Y H:i" }}</small>
+        </article>
+    {% empty %}
+        <p>No matching active notes were found.</p>
+    {% endfor %}
+</div>
+{% endblock %}

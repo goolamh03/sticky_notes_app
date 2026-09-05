@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Archived sticky notes</h1>
+<div class="notes-grid">
+    {% for note in notes %}
+        <article class="sticky-note archived">
+            <h2>{{ note.title }}</h2>
+            <p>{{ note.content|truncatewords:25 }}</p>
+            <form method="post" action="{% url 'notes:restore' note.pk %}">
+                {% csrf_token %}
+                <button class="button" type="submit">Restore</button>
+            </form>
+        </article>
+    {% empty %}
+        <p>You have no archived notes.</p>
+    {% endfor %}
+</div>
+{% endblock %}

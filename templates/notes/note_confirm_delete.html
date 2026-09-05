@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="panel narrow">
+    <h1>Delete sticky note</h1>
+    <p>Delete “{{ note.title }}” permanently?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button class="button danger" type="submit">Confirm delete</button>
+        <a href="{{ note.get_absolute_url }}">Cancel</a>
+    </form>
+</section>
+{% endblock %}

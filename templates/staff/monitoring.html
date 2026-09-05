@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>System monitoring</h1>
+<div class="stats">
+    <div><strong>{{ user_count }}</strong><span>Total users</span></div>
+    <div><strong>{{ active_user_count }}</strong><span>Active users</span></div>
+    <div><strong>{{ note_count }}</strong><span>Total notes</span></div>
+    <div><strong>{{ archived_note_count }}</strong><span>Archived notes</span></div>
+</div>
+<p>
+    <a class="button" href="{% url 'staff_users' %}">Manage users</a>
+    <a class="button secondary" href="{% url 'staff_all_notes' %}">
+        View all notes
+    </a>
+</p>
+<h2>Recent audit events</h2>
+<div class="table-wrap">
+<table>
+    <thead><tr><th>Time</th><th>User</th><th>Action</th><th>Details</th></tr></thead>
+    <tbody>
+    {% for log in recent_logs %}
+        <tr>
+            <td>{{ log.created_at|date:"j M Y H:i" }}</td>
+            <td>{{ log.user|default:"System" }}</td>
+            <td>{{ log.action }}</td>
+            <td>{{ log.details }}</td>
+        </tr>
+    {% empty %}
+        <tr><td colspan="4">No audit events.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}

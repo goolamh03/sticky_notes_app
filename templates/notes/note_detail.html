@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}{{ note.title }} | Sticky Notes{% endblock %}
+{% block content %}
+<article class="panel">
+    <h1>{{ note.title }}</h1>
+    <p class="note-content">{{ note.content|linebreaksbr }}</p>
+    <p><small>Created {{ note.created_at|date:"j M Y H:i" }};
+        updated {{ note.updated_at|date:"j M Y H:i" }}</small></p>
+    <div class="actions">
+        <a class="button" href="{% url 'notes:update' note.pk %}">Edit</a>
+        <a class="button danger" href="{% url 'notes:delete' note.pk %}">
+            Delete
+        </a>
+        {% if not note.archived %}
+            <form method="post" action="{% url 'notes:archive' note.pk %}">
+                {% csrf_token %}
+                <button class="button secondary" type="submit">Archive</button>
+            </form>
+        {% else %}
+            <form method="post" action="{% url 'notes:restore' note.pk %}">
+                {% csrf_token %}
+                <button class="button" type="submit">Restore</button>
+            </form>
+        {% endif %}
+    </div>
+</article>
+{% endblock %}

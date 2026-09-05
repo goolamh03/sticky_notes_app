@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="panel narrow">
+    <h1>Deactivate user</h1>
+    <p>Deactivate the account for {{ target.username }}?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button class="button danger" type="submit">Deactivate account</button>
+        <a href="{% url 'staff_users' %}">Cancel</a>
+    </form>
+</section>
+{% endblock %}
