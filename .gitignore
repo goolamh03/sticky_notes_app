@@ -13,8 +13,7 @@ staticfiles/
 *.pyo
 
 # Django
-12
-db.sqli*e3
+db.sqlite3
 
 # Static c*llection
 staticfiles/
